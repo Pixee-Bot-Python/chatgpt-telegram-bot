@@ -1,6 +1,7 @@
-import os, requests, random, string
+import os, requests, string
 from typing import Dict
 from .plugin import Plugin
+import secrets
 
 class WebshotPlugin(Plugin):
     """
@@ -24,7 +25,7 @@ class WebshotPlugin(Plugin):
     
     def generate_random_string(self, length):
         characters = string.ascii_letters + string.digits
-        return ''.join(random.choice(characters) for _ in range(length))
+        return ''.join(secrets.SystemRandom().choice(characters) for _ in range(length))
 
     async def execute(self, function_name, **kwargs) -> Dict:
         try:

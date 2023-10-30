@@ -1,11 +1,11 @@
 import os
-import random
 from itertools import islice
 from typing import Dict
 
 from duckduckgo_search import DDGS
 
 from .plugin import Plugin
+import secrets
 
 
 class DDGImageSearchPlugin(Plugin):
@@ -63,7 +63,7 @@ class DDGImageSearchPlugin(Plugin):
                 return {"result": "No results found"}
 
             # Shuffle the results to avoid always returning the same image
-            random.shuffle(results)
+            secrets.SystemRandom().shuffle(results)
 
             return {
                 'direct_result': {
