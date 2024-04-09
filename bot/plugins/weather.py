@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import Dict
 
-import requests
-
 from .plugin import Plugin
+from security import safe_requests
 
 
 class WeatherPlugin(Plugin):
@@ -64,13 +63,13 @@ class WeatherPlugin(Plugin):
               f'&temperature_unit={kwargs["unit"]}'
         if function_name == 'get_current_weather':
             url += '&current_weather=true'
-            return requests.get(url).json()
+            return safe_requests.get(url).json()
 
         elif function_name == 'get_forecast_weather':
             url += '&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_mean,'
             url += f'&forecast_days={kwargs["forecast_days"]}'
             url += '&timezone=auto'
-            response = requests.get(url).json()
+            response = safe_requests.get(url).json()
             results = {}
             for i, time in enumerate(response["daily"]["time"]):
                 results[datetime.strptime(time, "%Y-%m-%d").strftime("%A, %B %d, %Y")] = {

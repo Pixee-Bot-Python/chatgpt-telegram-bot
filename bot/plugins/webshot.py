@@ -1,6 +1,7 @@
-import os, requests, random, string
+import os, random, string
 from typing import Dict
 from .plugin import Plugin
+from security import safe_requests
 
 class WebshotPlugin(Plugin):
     """
@@ -31,10 +32,10 @@ class WebshotPlugin(Plugin):
             image_url = f'https://image.thum.io/get/maxAge/12/width/720/{kwargs["url"]}'
             
             # preload url first
-            requests.get(image_url)
+            safe_requests.get(image_url)
 
             # download the actual image
-            response = requests.get(image_url, timeout=30)
+            response = safe_requests.get(image_url, timeout=30)
 
             if response.status_code == 200:
                 if not os.path.exists("uploads/webshot"):

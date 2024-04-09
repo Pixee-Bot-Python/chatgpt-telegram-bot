@@ -1,8 +1,9 @@
-import os, requests
+import os
 from typing import Dict
 from datetime import datetime
 
 from .plugin import Plugin
+from security import safe_requests
 
 
 class WorldTimeApiPlugin(Plugin):
@@ -40,7 +41,7 @@ class WorldTimeApiPlugin(Plugin):
         url = f'https://worldtimeapi.org/api/timezone/{timezone}'
 
         try:
-            wtr = requests.get(url).json().get('datetime')
+            wtr = safe_requests.get(url).json().get('datetime')
             wtr_obj = datetime.strptime(wtr, "%Y-%m-%dT%H:%M:%S.%f%z")
             time_24hr = wtr_obj.strftime("%H:%M:%S")
             time_12hr = wtr_obj.strftime("%I:%M:%S %p")

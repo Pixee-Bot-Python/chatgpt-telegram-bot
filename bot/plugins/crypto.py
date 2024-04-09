@@ -1,8 +1,7 @@
 from typing import Dict
 
-import requests
-
 from .plugin import Plugin
+from security import safe_requests
 
 
 # Author: https://github.com/stumpyfr
@@ -27,4 +26,4 @@ class CryptoPlugin(Plugin):
         }]
 
     async def execute(self, function_name, helper, **kwargs) -> Dict:
-        return requests.get(f"https://api.coincap.io/v2/rates/{kwargs['asset']}").json()
+        return safe_requests.get(f"https://api.coincap.io/v2/rates/{kwargs['asset']}").json()
